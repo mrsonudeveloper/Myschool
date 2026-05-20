@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M.K Public School</title>
+  <style>
+    :root{
+      --primary:#2b6cb0;
+      --accent:#f6ad55;
+      --muted:#6b7280;
+      --bg:#f7fafc;
+      --container-width:1100px;
+      --radius:8px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#111;line-height:1.5}
+    .container{max-width:var(--container-width);margin:0 auto;padding:1rem}
+    .site-header{background:#fff;border-bottom:1px solid #e6edf3;position:sticky;top:0;z-index:50}
+    .site-header .container{display:flex;align-items:center;gap:1rem;justify-content:space-between;padding:0.75rem 1rem}
+    .brand{display:flex;align-items:center;gap:0.75rem}
+    .brand h1{font-size:1.125rem;margin:0}
+    .logo{width:48px;height:48px;object-fit:cover;border-radius:6px;background:var(--accent);display:inline-block}
+    .site-nav{display:flex;gap:0.5rem}
+    .site-nav a{text-decoration:none;color:var(--muted);padding:0.4rem 0.6rem;border-radius:6px}
+    .site-nav a:hover{background:rgba(43,108,176,0.08);color:var(--primary)}
+    .nav-toggle{display:none;background:transparent;border:0;font-size:1.2rem}
+    .hero{background:linear-gradient(90deg,var(--primary),#3b82f6);color:#fff;padding:3rem 1rem;margin-bottom:1rem;border-radius:0 0 16px 16px}
+    .hero h2{margin:0 0 .5rem;font-size:1.8rem}
+    .btn{display:inline-block;background:var(--accent);color:#111;padding:0.6rem 1rem;border-radius:999px;text-decoration:none;border:0;cursor:pointer}
+    .about,.admissions,.academics,.contact{background:#fff;margin:1rem 0;padding:1rem;border-radius:var(--radius);box-shadow:0 1px 4px rgba(2,6,23,0.04)}
+    .features{display:flex;gap:1rem;padding:0;margin:0;list-style:none}
+    .features li{background:#f1f5f9;padding:0.5rem 0.75rem;border-radius:6px}
+    .cards{display:flex;gap:1rem;flex-wrap:wrap}
+    .card{flex:1 1 200px;background:#fafafa;padding:0.75rem;border-radius:8px;border:1px solid #eef2f7}
+    .form{display:grid;gap:0.5rem;max-width:480px}
+    .form label{display:flex;flex-direction:column;font-size:0.9rem}
+    .form input{padding:0.5rem;border:1px solid #e6edf3;border-radius:6px}
+    .form-msg{color:green;margin-top:0.25rem;font-size:0.9rem}
+    .site-footer{padding:1rem 0;background:#fff;border-top:1px solid #e6edf3;text-align:center;margin-top:1rem}
+
+    /* Gallery styles (responsive) */
+    .gallery-controls{display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;margin-bottom:0.75rem}
+    #gallery-input{display:none}
+    .dropzone{border:2px dashed #e6edf3;padding:0.75rem;border-radius:8px;text-align:center;color:var(--muted);cursor:pointer;background:#fff;transition:background .15s,box-shadow .15s}
+    .dropzone:focus,.dropzone:hover{background:#f8fafc;box-shadow:0 4px 14px rgba(2,6,23,0.06);outline:none}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;margin-top:0.75rem}
+    .gallery-item{position:relative;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #eef2f7;display:block;aspect-ratio:4/3}
+    .gallery-item .img-wrap{position:relative;width:100%;height:100%}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+    .remove-btn{position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);color:#fff;border:0;border-radius:4px;padding:4px 6px;cursor:pointer;font-size:0.9rem}
+
+    @media (min-width:1000px){.gallery-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}}
+    @media (max-width:800px){
+      .site-nav{position:absolute;right:1rem;top:66px;flex-direction:column;background:#fff;padding:0.5rem;border-radius:8px;display:none;box-shadow:0 6px 20px rgba(2,6,23,0.08)}
+      .site-nav.show{display:flex}
+      .nav-toggle{display:block}
+      .hero{padding:2rem 1rem}
+      .features{flex-direction:column}
+      .container{padding:0.75rem}
+      .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+      .gallery-item img{height:100px}
+    }
+    @media (max-width:500px){
+      .gallery-grid{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.5rem}
+      .gallery-item{aspect-ratio:3/2}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <span class="logo" aria-hidden="true"></span>
+        <h1>M.K Public School</h1>
+      </div>
+      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#academics">Academics</a>
+        <a href="#gallery-section">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero" aria-labelledby="home-heading">
+      <div class="container">
+        <h2 id="home-heading">Welcome to M.K Public School</h2>
+        <p>Building bright futures with character, knowledge and compassion.</p>
+        <a class="btn" href="#admissions">Apply Now</a>
+      </div>
+    </section>
+
+    <section id="about" class="container about" aria-labelledby="about-heading">
+      <h3 id="about-heading">About Us</h3>
+      <p>M.K Public School provides quality education for students from Nursery to Class 10. Our mission is to ensure the academic and moral development of every student. Our experienced teachers and modern facilities create an inspiring learning environment for students. Along with academics, the school also gives importance to sports, arts, and cultural activities. We are a community-centered institution that values the trust of parents and students. Our goal is to help every child achieve their dreams and build a bright future.</p>
+      <ul class="features" aria-hidden="false">
+        <li>Experienced Faculty</li>
+        <li>Modern Classrooms</li>
+        <li>Sports & Arts Programs</li>
+      </ul>
+    </section>
+
+    <section id="admissions" class="container admissions" aria-labelledby="admissions-heading">
+      <h3 id="admissions-heading">Admissions</h3>
+      <p>Admissions are open for the new academic year. Submit the form to request details.</p>
+      <form id="admission-form" class="form" novalidate>
+        <label>
+          Student Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Age
+          <input type="number" name="age" min="3" max="20" required />
+        </label>
+        <label>
+          Class Applying For
+          <input type="text" name="class" required />
+        </label>
+        <button type="submit" class="btn">Request Info</button>
+        <p id="form-msg" class="form-msg" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="academics" class="container academics" aria-labelledby="academics-heading">
+      <h3 id="academics-heading">Academics</h3>
+      <div class="cards">
+        <article class="card">
+          <h4>Primary</h4>
+          <p>Foundational learning with activity-based curriculum.</p>
+        </article>
+        <article class="card">
+          <h4>Secondary</h4>
+          <p>Strong academics preparing students for higher studies.</p>
+        </article>
+        <article class="card">
+          <h4>Co-curricular</h4>
+          <p>Sports, arts, clubs and community service opportunities.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Simple gallery: no login, add images via Add Images button or drop files -->
+    <section id="gallery-section" class="container about" aria-labelledby="gallery-heading">
+      <h3 id="gallery-heading">Gallery</h3>
+
+      <div class="gallery-controls" aria-hidden="false">
+        <label class="btn" for="gallery-input" style="cursor:pointer">Add Images</label>
+        <input id="gallery-input" type="file" accept="image/*" multiple />
+        <button id="clear-gallery" class="btn" type="button">Clear Gallery</button>
+      </div>
+
+      <div id="dropzone" class="dropzone" tabindex="0">Drag & drop images here or click "Add Images"</div>
+      <div id="gallery-grid" class="gallery-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="contact" class="container contact" aria-labelledby="contact-heading">
+      <h3 id="contact-heading">Contact</h3>
+      <p>Email: info@mkpublicschool.example | Phone: +91 94506 93372</p>
+      <p>Address: Village - Narsar, Post - Dummar Bhar, District - Kushinagar, Uttar Pradesh</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>© <span id="year"></span> M.K Public School — All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const GALLERY_KEY = 'mk_gallery_v1';
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const nav = document.getElementById('site-nav');
+      const toggle = document.getElementById('nav-toggle');
+      const year = document.getElementById('year');
+      if (year) year.textContent = new Date().getFullYear();
+      if (toggle && nav) toggle.addEventListener('click', () => nav.classList.toggle('show'));
+
+      // Admission form
+      const form = document.getElementById('admission-form');
+      const msg = document.getElementById('form-msg');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const fd = new FormData(form);
+          const name = fd.get('name') || 'Applicant';
+          msg.textContent = `Thanks ${name}. We will contact you soon.`;
+          form.reset();
+          setTimeout(() => { msg.textContent = ''; }, 4000);
+        });
+      }
+
+      // Gallery elements + persistent storage (no login)
+      const input = document.getElementById('gallery-input');
+      const dropzone = document.getElementById('dropzone');
+      const grid = document.getElementById('gallery-grid');
+      const clearBtn = document.getElementById('clear-gallery');
+      const urls = new Set();
+
+      function saveGallery() {
+        try {
+          localStorage.setItem(GALLERY_KEY, JSON.stringify(Array.from(urls)));
+        } catch (err) {
+          console.warn('Could not save gallery to localStorage', err);
+        }
+      }
+
+      function loadGallery() {
+        const raw = localStorage.getItem(GALLERY_KEY);
+        if (!raw) return;
+        try {
+          const arr = JSON.parse(raw);
+          if (!Array.isArray(arr)) return;
+          arr.forEach(dataUrl => {
+            if (!urls.has(dataUrl)) {
+              urls.add(dataUrl);
+              createItem(dataUrl, 'saved-image');
+            }
+          });
+        } catch (e) {
+          console.warn('Invalid gallery data', e);
+        }
+      }
+
+      function createItem(dataUrl, name) {
+        if (urls.has(dataUrl) && grid.querySelector(`img[src="${dataUrl}"]`)) return;
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.target = '_blank';
+        link.className = 'gallery-item';
+        const wrap = document.createElement('div');
+        wrap.className = 'img-wrap';
+        const img = document.createElement('img');
+        img.src = dataUrl;
+        img.alt = name || 'school image';
+        wrap.appendChild(img);
+        const btn = document.createElement('button');
+        btn.className = 'remove-btn';
+        btn.type = 'button';
+        btn.title = 'Remove';
+        btn.textContent = '✕';
+        btn.addEventListener('click', () => {
+          urls.delete(dataUrl);
+          saveGallery();
+          item.remove();
+        });
+        item.appendChild(wrap);
+        item.appendChild(btn);
+        link.appendChild(item);
+        grid.appendChild(link);
+      }
+
+      function handleFiles(files) {
+        Array.from(files).forEach(file => {
+          if (!file.type.startsWith('image/')) return;
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const dataUrl = ev.target.result;
+            if (urls.has(dataUrl)) return;
+            urls.add(dataUrl);
+            createItem(dataUrl, file.name);
+            saveGallery();
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      loadGallery();
+
+      if (input) input.addEventListener('change', (e) => {
+        if (e.target.files) handleFiles(e.target.files);
+        input.value = '';
+      });
+
+      if (dropzone) {
+        dropzone.addEventListener('click', () => input.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.style.background = '#f8fafc'; });
+        dropzone.addEventListener('dragleave', () => { dropzone.style.background = ''; });
+        dropzone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropzone.style.background = '';
+          if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+        });
+        dropzone.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); }
+        });
+      }
+
+      if (clearBtn) clearBtn.addEventListener('click', () => {
+        if (!confirm('Clear all gallery images?')) return;
+        urls.clear();
+        saveGallery();
+        grid.innerHTML = '';
+      });
+    });
+  </script>
+</body>
+</html>
